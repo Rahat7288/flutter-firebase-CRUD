@@ -16,6 +16,7 @@ class FireStoreHelper {
 
     // creating the uniqe id for the user model
     final uid = userCollection.doc().id;
+    // docRef got the uniqe id that have been created
     final docRef = userCollection.doc(uid);
     // creating the new user by accesing the userModel
     final newUser = UserModel(
@@ -48,5 +49,12 @@ class FireStoreHelper {
     } catch (e) {
       print("some error oddour $e");
     }
+  }
+
+  // function for deleting item form the list
+
+  static Future delete(UserModel user) async {
+    final userController = FirebaseFirestore.instance.collection("users");
+    final docRef = userController.doc(user.id).delete();
   }
 }

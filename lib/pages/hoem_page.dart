@@ -86,6 +86,29 @@ class _HomeState extends State<Home> {
                           return Container(
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             child: ListTile(
+                              onLongPress: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('Delete'),
+                                        content: const Text(
+                                            ' are you sure you want to delete this item ?'),
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              FireStoreHelper.delete(
+                                                      // we need to add then becouse it an async function
+                                                      singleUserData)
+                                                  .then((value) =>
+                                                      {Navigator.pop(context)});
+                                            },
+                                            child: const Text('Delete'),
+                                          )
+                                        ],
+                                      );
+                                    });
+                              },
                               leading: Container(
                                 width: 40,
                                 height: 40,
@@ -108,14 +131,14 @@ class _HomeState extends State<Home> {
                                                       id: singleUserData.id),
                                                 )));
                                   },
-                                  child: Icon(Icons.edit)),
+                                  child: const Icon(Icons.edit)),
                             ),
                           );
                         }),
                   );
                 }
 
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }),
